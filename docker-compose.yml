@@ -1,7 +1,7 @@
 ﻿version: "3.9"
 services:
   web:
-    container_name: FirstWebApiDockerSample
+    container_name: FirstWebApi
     image: daimagencmuhendisler/firstwebapi:latest
     ports:
      - "5949:80"
