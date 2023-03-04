@@ -25,13 +25,6 @@ node  {
             sh "docker-compose down"
             sh "docker-compose up -d"
     }
-   stage('Slack Notification')
-    {
-             slackSend channel: '#yourchannel',
-                    color: COLOR_MAP[currentBuild.getCurrentResult()],
-                    tokenCredentialId:'slackCredentials',
-                    message: "*${currentBuild.getCurrentResult()}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}"
-    }
     }
     catch(e){
                 slackSend channel: '#yourchannel',
