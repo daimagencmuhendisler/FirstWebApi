@@ -6,16 +6,16 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["FirstwebApi.csproj", "."]
-RUN dotnet restore "./FirstwebApi.csproj"
+COPY ["FirstWebApi.csproj", "."]
+RUN dotnet restore "./FirstWebApi.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "FirstwebApi.csproj" -c Release -o /app/build
+RUN dotnet build "FirstWebApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "FirstwebApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "FirstWebApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "FirstwebApi.dll"]
+ENTRYPOINT ["dotnet", "FirstWebApi.dll"]
