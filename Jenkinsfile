@@ -42,4 +42,3 @@ node  {
     
     }
 }
-view rawJenkinsfile hosted with ❤ by GitHub
