@@ -1,3 +1,4 @@
+
 node  {
     def app
     def COLOR_MAP = ['SUCCESS': 'good', 'FAILURE': 'danger', 'UNSTABLE': 'danger', 'ABORTED': 'danger']
@@ -9,7 +10,7 @@ node  {
     stage('Build image') {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
-            app = docker.build("daimagencmuhendisler/firstwebapi")
+            app = docker.build("tasmehmetcan/dockerjenkinssampleapp")
         }
     stage('Push image') {
         /* Finally, we'll push the image with two tags:
@@ -34,7 +35,11 @@ node  {
     }
     }
     catch(e){
-                
+                slackSend channel: '#yourchannel',
+                    color: 'danger',
+                    tokenCredentialId:'slackCredentials',
+                    message: "*ERROR:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n Description : ${e}\n More info at: ${env.BUILD_URL}"
     
     }
 }
+view rawJenkinsfile hosted with ❤ by GitHub
