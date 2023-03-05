@@ -14,7 +14,7 @@ node  {
     stage('Push image') {
         /* Finally, we'll push the image with two tags:
          * First, the incremental build number from Jenkins
-         * Second, the 'latest' tag. 
+         * Second, the 'latest' tag.
          * Pushing multiple tags is cheap, as all the layers are reused. */
         docker.withRegistry('', 'dockerhub') {
             app.push("latest")
@@ -24,6 +24,13 @@ node  {
     stage('Restart Application') {
             sh "docker-compose down"
             sh "docker-compose up -d"
+    }
+   stage('Slack Notification')
+    {
+             slackSend channel: '#yourchannel',
+                    color: COLOR_MAP[currentBuild.getCurrentResult()],
+                    tokenCredentialId:'slackCredentials',
+                    message: "*${currentBuild.getCurrentResult()}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}"
     }
     }
     catch(e){
